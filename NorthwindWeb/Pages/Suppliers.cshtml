@@ -1,0 +1,34 @@
+﻿@page
+@model NorthwindWeb.Pages.SuppliersModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="row">
+    <h2 class="display-2">Our Suppliers</h2>
+
+    <table class="table">
+
+        <thead class="thead-inverse">
+            <tr><th>Our Company Names</th></tr>
+        </thead>
+
+        <tbody>
+            @foreach(string name in Model.Suppliers)
+            {
+                <tr><td>@name</td></tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="row">
+
+    <p>Enter a name for a new supplier:</p>
+    
+    <form method="POST">
+        <div><input asp-for="Supplier.CompanyName" /></div>
+        <input type="submit" />
+    </form>
+
+</div>

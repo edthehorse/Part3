@@ -1,0 +1,132 @@
+﻿@model Packt.CS7.HomeIndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@*Makes a CAROUSEL*@
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+    <ol class="carousel-indicators">
+
+        @for (int c = 0; c < Model.Categories.Count; c++)  // 8 categories ed
+        {
+            if (c == 0)
+            {
+                <li data-target="#myCarousel" data-slide-to="@c" class="active"></li>
+            }
+            else
+            {
+                <li data-target="#myCarousel" data-slide-to="@c"></li>
+            }
+        }
+
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+
+        @for (int c = 0; c < Model.Categories.Count; c++)
+        {
+            if (c == 0)
+            {
+                <div class="item active">
+                    <img src="~/images/category@(Model.Categories[c].CategoryID).jpeg" alt="@Model.Categories[c].CategoryName" class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>
+                            @Model.Categories[c].Description
+                            <a class="btn btn-default" href="/category/@Model.Categories[c].CategoryID">
+                            @Model.Categories[c].CategoryName
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="item">
+
+                    <img src="~/images/category@(Model.Categories[c].CategoryID).jpeg" alt="@Model.Categories[c].CategoryName" class="img-responsive" />
+                    
+                    <div class="carousel-caption" role="option">
+                        
+                        <p>
+                            @Model.Categories[c].Description
+                            <a class="btn btn-default" href="/category/@Model.Categories[c].CategoryID">
+                            @Model.Categories[c].CategoryName
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <h1>Northwind</h1>  @*This visitor count appears on every caroussel page ed *@
+        <p class="lead">    We have had @Model.VisitorCount  visitors this month.    </p>
+        @*.lead { font-size: 21px;  }*@
+
+
+        @*// GET PRODUCTS ThatCostMoreThan from a text box value.*@
+
+        // STEP 1 Get the value from the main (Index) form.
+
+        <form asp-action="ProductsThatCostMoreThan" method="get">
+
+            @*This makes a text box in which to type into the min PRODUCT price ed *@
+            @* Get ? Goes via the URL ? ed *@
+            @*Looks like it: https://localhost:44395/Home/ProductsThatCostMoreThan?price=50*@
+
+            <input name="price" placeholder="Enter a product price" /> @* <- Text Box ed *@
+
+            <input type="submit" />  @* <- Submit button ed *@
+
+            @*Sends the price off to the HomeController page.*@
+            @*ie The IActionResult ProductsThatCostMoreThan(decimal? price)*@
+
+        </form>
+
+
+        @*PRINT ALL PRODUCTS to the main page.*@
+
+        <h2>Products</h2>
+
+        <div id="newspaper">
+            @*ie  #newspaper { column-count: 3; }ed *@
+            <ul>
+                @* All 78 PRODUCTS  ed *@
+
+                @foreach (var item in @Model.Products)
+                {
+                    <li>
+                        <a asp-controller="Home" asp-action="ProductDetail" asp-route-id="@item.ProductID">
+                            @* eg Home/ProductDetail/1 ed *@
+
+                            @item.ProductName costs @item.UnitPrice.Value.ToString("C")  @* eg Chai costs £18.00 (C:Currency fomat) ed *@
+
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+    </div> @*Visitor Count*@
+
+</div>

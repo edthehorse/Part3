@@ -1,0 +1,58 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+@*Step 3 Register. The Register form appears.*@
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+
+            <h4>Create a new account.</h4>
+
+            @*<hr />  ??? ed *@
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+
+                @*EMAIL input*@
+                <label asp-for="Email"></label> @* Label *@
+                <input asp-for="Email" class="form-control" /> @* Text Box *@
+                <span asp-validation-for="Email" class="text-danger"></span> @* Verify? *@
+          @* Maybe this checks that the email is of the correct form?   ed *@
+            </div>
+
+            @*PASSWORD input*@
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            @* Maybe this checks that the password is of the correct form?   ed *@
+        </div>
+
+            @*CONFIRM input*@
+        <div class="form-group">
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+          @* Maybe this checks that the password s are the same - a Service?   ed *@
+
+        </div>
+
+@*Step 4. After the above validation click the button. Goes to the Register page. Register.cshtml which is in the View/Account/*@
+            @*SUBMIT all*@
+            <button type="submit" class="btn btn-default">Register Me</button>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+@*Oh - so THIS does all the checking! ed*@
+}
